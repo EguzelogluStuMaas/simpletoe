@@ -19,7 +19,7 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public void setPlayer(int rows, int cols, int linesToWin, boolean isPlayer1, int timeoutLimit, CellButton[] emptyCells) {
+    public void setPlayer(int rows, int cols, int linesToWin, boolean isPlayer1, int timeoutLimit) {
         // Implement any initialization required
     }
 

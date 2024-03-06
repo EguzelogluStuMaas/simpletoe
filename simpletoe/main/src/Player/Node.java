@@ -52,6 +52,11 @@ public class Node {
         //TODO Auto-generated constructor stub
     }
 
+    public Node(int rows, int cols, int k2, CellState[][] board, CellState[] emptyCells2, CellButton[] markedCells2,
+            int timeoutLimit2) {
+        //TODO Auto-generated constructor stub
+    }
+
     public List<Node> getChildren() {
         return children;
     }

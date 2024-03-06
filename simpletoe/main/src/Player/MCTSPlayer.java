@@ -17,6 +17,7 @@ public class MCTSPlayer implements Player {
     private Boolean[] winTableOpponent;
     private CellState agentCellState;
     private CellState opponentCellState;
+    private CellState[] emptyCells;
     private JFrame frame;
 
     public MCTSPlayer(JFrame frame) {
@@ -24,7 +25,7 @@ public class MCTSPlayer implements Player {
         this.rand = new Random(System.currentTimeMillis());
     }
     @Override
-    public void setPlayer(int rows, int cols, int k, boolean turn, int timeoutLimit, CellButton[] emptyCells) {
+    public void setPlayer(int rows, int cols, int k, boolean turn, int timeoutLimit) {
         this.rows = rows;
         this.cols = cols;
         this.K = k;

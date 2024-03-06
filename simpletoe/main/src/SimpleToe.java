@@ -160,7 +160,17 @@ public class SimpleToe extends JFrame {
 
 
     public void startGame() {
-        // Implement game start logic
+        if (gameType == GameType.HUMAN_VS_HUMAN) {
+            player1.setPlayer(rows, cols, linesToWin, true, 15);
+            player2.setPlayer(rows, cols, linesToWin, false, 15);
+        } else if (gameType == GameType.COMPUTER_VS_HUMAN) {
+            player1.setPlayer(rows, cols, linesToWin, true, 15);
+            // Declare and initialize emptyCells variable
+            player2.setPlayer(rows, cols, linesToWin, false, 15);
+        } else if (gameType == GameType.COMPUTER_VS_COMPUTER) {
+            player1.setPlayer(rows, cols, linesToWin, true, 15);
+            player2.setPlayer(rows, cols, linesToWin, false, 15);
+        }
     }
 }
 
