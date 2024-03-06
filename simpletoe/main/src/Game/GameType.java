@@ -1,0 +1,5 @@
+package Game;
+
+public enum GameType {
+    HUMAN_VS_HUMAN, COMPUTER_VS_HUMAN, COMPUTER_VS_COMPUTER
+}
