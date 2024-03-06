@@ -1,8 +1,9 @@
 package Player;
 
-import Game.CellButton;
-
 import javax.swing.*;
+
+import Game.CellState;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +11,7 @@ public class HumanPlayer implements Player {
     private JFrame frame;
     private CellButton selectedCell;
     private boolean moveSelected;
-
+    private CellState cellState;
     public HumanPlayer(JFrame frame) {
         this.frame = frame;
         this.moveSelected = false;
@@ -60,9 +61,19 @@ public class HumanPlayer implements Player {
 
         return selectedCell;
     }
-
     @Override
     public String playerName() {
         return "Human Player.Player";
     }
+    @Override
+   public String getSymbol() {
+    if(cellState == CellState.PLAYER1){
+        return "X";
+    }
+    else{
+        return "O";
+    }
+}
+
+    
 }

@@ -1,64 +1,55 @@
 package Game;
 
 import javax.swing.*;
+
+import Player.CellButton;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
 
-public class GameBoard extends JPanel {
+public class GameBoard {
     private int rows;
     private int cols;
     private int linesToWin;
-    private JButton[][] cells;
+    private CellButton[][] cells;
     private CellState currentStateOfCell;
+    private CellState[][] board;
+    protected LinkedList<CellButton> MC;  // Marked Cells
+	protected HashSet<CellButton>    FC;  // Free Cells
 
-    public GameBoard(int rows, int cols, int linesToWin) {
+    public GameBoard(int rows, int cols, int linesToWin)throws IllegalArgumentException {
+        if (rows <= 0) throw new IllegalArgumentException("M cannot be smaller than 1");
+		if (cols <= 0) throw new IllegalArgumentException("N cannot be smaller than 1");
+		if (linesToWin <= 0) throw new IllegalArgumentException("K cannot be smaller than 1");
+        
         this.rows = rows;
         this.cols = cols;
         this.linesToWin = linesToWin;
-        this.cells = new CellButton[rows][cols];
         this.currentStateOfCell = CellState.PLAYER1;
-
-        setLayout(new GridLayout(rows, cols));
+        this.board = new CellState[rows][cols];
         initializeCells();
     }
 
     private void initializeCells() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                cells[i][j] = new CellButton(i, j);
-                cells[i][j].setFont(new Font("Arial", Font.PLAIN, 40));
-                cells[i][j].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CellButton clickedCell = (CellButton) e.getSource();
-                        if (clickedCell.isEmpty()) {
-                            clickedCell.setSymbol(currentStateOfCell);
-                            if (checkForWin(clickedCell.getRow(), clickedCell.getCol())) {
-                                JOptionPane.showMessageDialog(null, "Player " + currentStateOfCell + " wins!");
-                                resetBoard();
-                            } else if (isBoardFull()) {
-                                JOptionPane.showMessageDialog(null, "It's a draw!");
-                                resetBoard();
-                            } else {
-                                currentStateOfCell = (currentStateOfCell == CellState.PLAYER1) ? CellState.PLAYER2 : CellState.PLAYER1;
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Invalid move. Cell already taken!");
-                        }
-                    }
-                });
-                add(cells[i][j]);
+                board[i][j] = CellState.EMPTY;
             }
         }
     }
-
+    public int getNumberOfEmptyCells(){
+        return FC.size();
+    }
     private boolean checkForWin(int row, int col) {
         // Check row
         if (checkLine(cells[row], linesToWin)) return true;
 
         // Check column
-        JButton[] column = new JButton[rows];
+        CellButton[] column = new CellButton[rows];
         for (int i = 0; i < rows; i++) {
             column[i] = cells[i][col];
         }
@@ -112,9 +103,22 @@ public class GameBoard extends JPanel {
                 ((CellButton) cells[i][j]).reset();
             }
         }
-        currentStateOfCell = CellState.PLAYER1;
+        currentStateOfCell = CellState.EMPTY;
     }
-
+    private void initBoard() {
+		for(int i = 0; i < rows; i++)
+			for(int j = 0; j < cols; j++)
+				board[rows][cols] = CellState.EMPTY;
+	}
+    private void initMarkedCells(){
+        this.MC = new LinkedList<CellButton>();
+    }
+    private void resetEmptyCells(){
+        this.FC.clear();
+		for(int i = 0; i < rows; i++)
+			for(int j = 0; j < cols; j++)
+				this.FC.add(new CellButton(i,j));
+    }
     public int getRows() {
         return rows;
     }
@@ -143,7 +147,7 @@ public class GameBoard extends JPanel {
         return cells;
     }
 
-    public void setCells(JButton[][] cells) {
+    public void setCells(CellButton[][] cells) {
         this.cells = cells;
     }
 
@@ -153,6 +157,12 @@ public class GameBoard extends JPanel {
 
     public void setCurrentStateOfCell(CellState currentStateOfCell) {
         this.currentStateOfCell = currentStateOfCell;
+    }
+    public CellButton[] getEmptyCells(){
+        return FC.toArray(new CellButton[FC.size()]);
+    }
+    public CellButton[] getMarkedCells(){
+        return MC.toArray(new CellButton[MC.size()]);
     }
 
 }

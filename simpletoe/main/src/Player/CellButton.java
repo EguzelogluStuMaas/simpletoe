@@ -1,4 +1,4 @@
-package Game;
+package Player;
 
 import Game.CellState;
 
@@ -40,4 +40,24 @@ public class CellButton extends JButton {
         state = CellState.EMPTY;
         setText("");
     }
+    @Override
+	public boolean equals(Object o) {
+		if(o == null)               return false;
+		if(o == this)               return true; 	
+		if(!(o instanceof CellButton)) return false;
+
+		CellButton c = (CellButton) o;
+
+		return this.row == c.row && this.col == c.col && this.state == c.state;
+	}
+
+	@Override
+	public int hashCode() {
+		return this.toString().hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "[" + this.row + "," + this.col + "] -> " + this.state;
+	}
 }

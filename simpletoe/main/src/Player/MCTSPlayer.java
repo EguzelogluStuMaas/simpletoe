@@ -1,6 +1,5 @@
 package Player;
 
-import Game.CellButton;
 import Game.CellState;
 import Player.Player;
 
@@ -73,5 +72,14 @@ public class MCTSPlayer implements Player {
     public String playerName() {
         return "MCTS Player.Player";
     }
+    @Override
+   public String getSymbol() {
+    if(agentCellState == CellState.PLAYER1){
+        return "X";
+    }
+    else{
+        return "O";
+    }
+}
 }
 

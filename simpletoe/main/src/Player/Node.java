@@ -1,6 +1,5 @@
 package Player;
 
-import Game.CellButton;
 import Game.CellState;
 
 import java.util.*;
